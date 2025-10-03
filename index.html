@@ -34,7 +34,7 @@
       transition: 0.3s;
     }
     section {
-      padding: 2rem;
+      padding: 2rem 1rem;
       text-align: center;
     }
     .services, .properties {
@@ -49,6 +49,10 @@
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       text-align: left;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
     }
     .property-card {
       overflow: hidden;
@@ -57,6 +61,7 @@
     .property-card img {
       width: 100%;
       border-radius: 10px 10px 0 0;
+      display: block;
     }
     .property-card .info {
       padding: 1rem;
@@ -72,6 +77,21 @@
       background: #2c3e50;
       color: white;
       margin-top: 2rem;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+      nav a {
+        width: 100%;
+        text-align: center;
+        padding: 0.75rem;
+      }
+      section {
+        padding: 1.5rem 1rem;
+      }
     }
   </style>
 </head>
@@ -134,29 +154,44 @@
     <p>© 2025 Thakkabbal Real Estate | All Rights Reserved</p>
   </footer>
 
-  <!-- 🔹 Google Sheets Integration Script -->
+  <!-- 🔹 Google Sheets Integration Script with Lazy Load -->
   <script>
-    // Your published Google Sheet CSV link
     const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRklCkHfSfMyiATF-zsskYfCzwcmYVAVN3gxCe9Oed0SbYrM-9QDLhdgCJUdQzN6mRWd4OWHD9jyIX3/pub?output=csv";
+
+    function driveLinkToDirect(url) {
+      const match = url.match(/\/d\/([a-zA-Z0-9_-]+)\//);
+      if (match && match[1]) {
+        return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+      }
+      return url;
+    }
+
+    function parseImageFormula(url) {
+      const formulaMatch = url.match(/=IMAGE\("(.+)"\)/i);
+      return formulaMatch ? formulaMatch[1] : url;
+    }
 
     async function loadProperties() {
       try {
         const response = await fetch(sheetUrl);
         const data = await response.text();
 
-        // Convert CSV to rows
         const rows = data.split("\n").map(r => r.split(","));
         const container = document.getElementById("property-list");
 
-        // Skip header row (index 0)
         rows.slice(1).forEach(row => {
-          if(row.length < 4) return; // skip empty rows
-          const [name, price, details, image] = row;
+          if(row.length < 4) return;
+
+          let [name, price, details, image] = row;
+          if(!name.trim()) return;
+
+          image = parseImageFormula(image.trim());
+          image = driveLinkToDirect(image);
 
           const card = document.createElement("div");
           card.className = "card property-card";
           card.innerHTML = `
-            <img src="${image}" alt="${name}">
+            <img src="${image}" alt="${name}" loading="lazy">
             <div class="info">
               <h3>${name}</h3>
               <p class="price">${price}</p>
