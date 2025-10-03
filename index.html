@@ -4,15 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thakkabbal Real Estate</title>
-    <!-- Meta Description -->
-  <meta name="description" content="Thakkabbal Real Estate offers houses, flats, villas, rubber plantations, and agricultural land for sale in Kochi & Kerala. Buy, sell, or rent verified properties with trusted service.">
-
-  <!-- Keywords -->
-  <meta name="keywords" content="real estate Kochi, houses in Kochi, flats in Kochi, villas in Kochi, rubber land Kerala, rubber plantation for sale, agricultural land Kochi, property in Kerala, buy house Kochi, rent house Kerala, commercial property Kochi">
-
-  <!-- Author -->
-  <meta name="author" content="Thakkabbal Real Estate">
-
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -123,32 +114,7 @@
 
   <section id="properties">
     <h2>Featured Properties</h2>
-    <div class="properties">
-      <div class="card property-card">
-        <img src="https://via.placeholder.com/400x250?text=Luxury+Villa" alt="Luxury Villa">
-        <div class="info">
-          <h3>Luxury Villa in Kochi</h3>
-          <p class="price">₹1.2 Cr</p>
-          <p>4 BHK • 3200 sq.ft • Near Marine Drive</p>
-        </div>
-      </div>
-      <div class="card property-card">
-        <img src="https://via.placeholder.com/400x250?text=Modern+Apartment" alt="Modern Apartment">
-        <div class="info">
-          <h3>Modern Apartment</h3>
-          <p class="price">₹75 Lakhs</p>
-          <p>3 BHK • 1500 sq.ft • Kakkanad</p>
-        </div>
-      </div>
-      <div class="card property-card">
-        <img src="https://via.placeholder.com/400x250?text=Commercial+Office" alt="Commercial Office">
-        <div class="info">
-          <h3>Commercial Office Space</h3>
-          <p class="price">₹50,000 / month</p>
-          <p>2000 sq.ft • Infopark, Kochi</p>
-        </div>
-      </div>
-    </div>
+    <div id="property-list" class="properties"></div>
   </section>
 
   <section id="about">
@@ -167,5 +133,44 @@
   <footer>
     <p>© 2025 Thakkabbal Real Estate | All Rights Reserved</p>
   </footer>
+
+  <!-- 🔹 Google Sheets Integration Script -->
+  <script>
+    // Your published Google Sheet CSV link
+    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRklCkHfSfMyiATF-zsskYfCzwcmYVAVN3gxCe9Oed0SbYrM-9QDLhdgCJUdQzN6mRWd4OWHD9jyIX3/pub?output=csv";
+
+    async function loadProperties() {
+      try {
+        const response = await fetch(sheetUrl);
+        const data = await response.text();
+
+        // Convert CSV to rows
+        const rows = data.split("\n").map(r => r.split(","));
+        const container = document.getElementById("property-list");
+
+        // Skip header row (index 0)
+        rows.slice(1).forEach(row => {
+          if(row.length < 4) return; // skip empty rows
+          const [name, price, details, image] = row;
+
+          const card = document.createElement("div");
+          card.className = "card property-card";
+          card.innerHTML = `
+            <img src="${image}" alt="${name}">
+            <div class="info">
+              <h3>${name}</h3>
+              <p class="price">${price}</p>
+              <p>${details}</p>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error("Error loading Google Sheet:", err);
+      }
+    }
+
+    loadProperties();
+  </script>
 </body>
 </html>
