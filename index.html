@@ -154,9 +154,10 @@
     <p>© 2025 Thakkabbal Real Estate | All Rights Reserved</p>
   </footer>
 
-  <!-- 🔹 Google Sheets Integration Script with Lazy Load -->
+  <!-- 🔹 Google Sheets Integration Script -->
   <script>
-    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRklCkHfSfMyiATF-zsskYfCzwcmYVAVN3gxCe9Oed0SbYrM-9QDLhdgCJUdQzN6mRWd4OWHD9jyIX3/pub?output=csv";
+    // ✅ New Google Sheet link (must be published)
+    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR5D6W3Q6fXkMiyC4Yo4gUuDFfGCO2kIXpBg19Uq2HjaRXRZ4l9tH0FQimT5ssoDxxc6w8OXX2t7mVZ/pub?output=csv";
 
     function driveLinkToDirect(url) {
       const match = url.match(/\/d\/([a-zA-Z0-9_-]+)\//);
@@ -180,10 +181,10 @@
         const container = document.getElementById("property-list");
 
         rows.slice(1).forEach(row => {
-          if(row.length < 4) return;
+          if (row.length < 4) return;
 
           let [name, price, details, image] = row;
-          if(!name.trim()) return;
+          if (!name.trim()) return;
 
           image = parseImageFormula(image.trim());
           image = driveLinkToDirect(image);
