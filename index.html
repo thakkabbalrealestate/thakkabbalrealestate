@@ -1,3 +1,7 @@
+Perfect! Let’s make it super simple: you can now just paste any Google Drive link (shared publicly) into your Google Sheet, and it will show automatically on your website. No =IMAGE() formulas, no CSV publishing needed.
+
+Here’s the updated full HTML code:
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,13 +76,13 @@
     <p>© 2025 Thakkabbal Real Estate | All Rights Reserved</p>
   </footer>
 
-  <!-- 🔹 Auto Google Sheets CSV Script -->
+  <!-- 🔹 Google Sheets Integration -->
   <script>
-    // 🔹 Just paste your Sheet ID here
-    const SHEET_ID = "1Gvv94pycsAjLNmVhthW2iBAGlVNfCBYytL_O3tiblD8"; // <-- your sheet ID
+    // Just paste your Sheet ID here
+    const SHEET_ID = "1Gvv94pycsAjLNmVhthW2iBAGlVNfCBYytL_O3tiblD8";
 
-    // Auto-generate published CSV link
-    const sheetUrl = `https://docs.google.com/spreadsheets/d/e/2PACX-1vRklCkHfSfMyiATF-zsskYfCzwcmYVAVN3gxCe9Oed0SbYrM-9QDLhdgCJUdQzN6mRWd4OWHD9jyIX3/pub?output=csv`;
+    // CSV URL generated automatically
+    const sheetUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
     function driveLinkToDirect(url) {
       const match = url.match(/\/d\/([a-zA-Z0-9_-]+)\//);
@@ -88,27 +92,19 @@
       return url;
     }
 
-    function parseImageFormula(url) {
-      const formulaMatch = url.match(/=IMAGE\("(.+)"\)/i);
-      return formulaMatch ? formulaMatch[1] : url;
-    }
-
     async function loadProperties() {
       try {
         const response = await fetch(sheetUrl);
         const data = await response.text();
-
         const rows = data.split("\n").map(r => r.split(","));
         const container = document.getElementById("property-list");
 
         rows.slice(1).forEach(row => {
           if(row.length < 4) return;
-
           let [name, price, details, image] = row;
           if(!name.trim()) return;
 
-          image = parseImageFormula(image.trim());
-          image = driveLinkToDirect(image);
+          image = driveLinkToDirect(image.trim());
 
           const card = document.createElement("div");
           card.className = "card property-card";
@@ -122,7 +118,7 @@
           `;
           container.appendChild(card);
         });
-      } catch (err) {
+      } catch(err) {
         console.error("Error loading Google Sheet:", err);
       }
     }
@@ -131,3 +127,34 @@
   </script>
 </body>
 </html>
+
+
+---
+
+How to use it:
+
+1. Open your Google Sheet → Share → Anyone with the link → Viewer
+
+
+2. In the sheet, add columns: Name, Price, Details, Image Link
+
+
+3. Paste the Drive share link directly in the Image Link column, e.g.:
+
+
+
+https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+
+4. Save the sheet — no =IMAGE() formula needed.
+
+
+5. Reload your website — the images will show automatically.
+
+
+
+
+---
+
+If you want, I can make it even smarter so you can paste any image URL from Google Drive, Dropbox, or web, and it always converts to a direct viewable image automatically.
+
+Do you want me to do that too?
