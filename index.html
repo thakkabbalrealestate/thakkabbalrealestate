@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +17,7 @@
     .property-card { overflow: hidden; padding: 0; }
     .property-card img { width: 100%; border-radius: 10px 10px 0 0; display: block; }
     .property-card .info { padding: 1rem; }
-    .price { color: #2ecc71; font-weight: bold; margin: 0.5rem 0; }
+    .price { color: #2ecc71; font-weight: bold; margin: 0.5rem 0; font-size: 1.1rem; }
     footer { text-align: center; padding: 1rem; background: #2c3e50; color: white; margin-top: 2rem; }
     @media (max-width: 600px) { nav { flex-direction: column; } nav a { width: 100%; text-align: center; padding: 0.75rem; } section { padding: 1.5rem 1rem; } }
   </style>
@@ -76,18 +74,21 @@
 
   <!-- 🔹 Google Sheets Integration -->
   <script>
-    // Just paste your Sheet ID here
     const SHEET_ID = "1Gvv94pycsAjLNmVhthW2iBAGlVNfCBYytL_O3tiblD8";
-
-    // CSV URL generated automatically
     const sheetUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
+    // Convert Google Drive link to direct image link
     function driveLinkToDirect(url) {
       const match = url.match(/\/d\/([a-zA-Z0-9_-]+)\//);
       if (match && match[1]) {
         return `https://drive.google.com/uc?export=view&id=${match[1]}`;
       }
       return url;
+    }
+
+    // Remove quotes and extra spaces
+    function cleanText(text) {
+      return text.replace(/^"|"$/g, '').trim();
     }
 
     async function loadProperties() {
@@ -99,15 +100,15 @@
 
         rows.slice(1).forEach(row => {
           if(row.length < 4) return;
-          let [name, price, details, image] = row;
-          if(!name.trim()) return;
+          let [name, price, details, image] = row.map(cleanText);
+          if(!name) return;
 
-          image = driveLinkToDirect(image.trim());
+          image = driveLinkToDirect(image);
 
           const card = document.createElement("div");
           card.className = "card property-card";
           card.innerHTML = `
-            <img src=${image} alt=${name} loading="lazy">
+            <img src="${image}" alt="${name}" loading="lazy">
             <div class="info">
               <h3>${name}</h3>
               <p class="price">${price}</p>
@@ -124,9 +125,5 @@
     loadProperties();
   </script>
 </body>
-
-
-
-
-
+</html>
 
