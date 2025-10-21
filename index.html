@@ -1,9 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- ✅ Basic Meta Tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="title" content="Thakkabbal Real Estate | Low Budget Land & House in Kerala">
+  <meta name="description" content="Find low budget land, plots, and houses in Kerala with Thakkabbal Real Estate. Verified property listings, water access, road-side plots, and more — updated regularly from our YouTube channel.">
+  <meta name="keywords" content="Thakkabbal Real Estate, Kerala Real Estate, low budget land, house for sale Kerala, plot for sale, land for sale Thrissur, Mannarkkad real estate, cheap land Kerala, agricultural land, Thakkabbalrealestate YouTube">
+  <meta name="author" content="Thakkabbal Real Estate">
+
+  <!-- ✅ Open Graph / Facebook Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Thakkabbal Real Estate | Kerala Low Budget Land & House Deals">
+  <meta property="og:description" content="Explore affordable land and house listings in Kerala. Trusted property updates from Thakkabbal Real Estate YouTube channel.">
+  <meta property="og:image" content="https://yourdomain.com/images/thakkabbal-banner.jpg">
+  <meta property="og:url" content="https://yourdomain.com/">
+  <meta property="og:site_name" content="Thakkabbal Real Estate">
+
+  <!-- ✅ Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Thakkabbal Real Estate | Kerala Property Deals">
+  <meta name="twitter:description" content="Low budget land and house listings in Kerala from Thakkabbal Real Estate.">
+  <meta name="twitter:image" content="https://yourdomain.com/images/thakkabbal-banner.jpg">
+
+  <!-- ✅ Favicon -->
+  <link rel="icon" type="image/png" href="https://yourdomain.com/favicon.png">
+
+  <!-- ✅ YouTube Profile Link -->
+  <link rel="me" href="https://www.youtube.com/@thakkabbalrealestate">
+
+  <!-- ✅ Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "Thakkabbal Real Estate",
+    "image": "https://yourdomain.com/images/thakkabbal-banner.jpg",
+    "url": "https://yourdomain.com/",
+    "logo": "https://yourdomain.com/favicon.png",
+    "description": "Low budget land, plots, and houses for sale across Kerala. Trusted and verified property listings updated from our Thakkabbal Real Estate YouTube channel.",
+    "telephone": "+91-9876543210",
+    "email": "contact@thakkabbalrealestate.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Kochi",
+      "addressLocality": "Kerala",
+      "addressCountry": "IN"
+    },
+    "sameAs": [
+      "https://www.youtube.com/@thakkabbalrealestate",
+      "https://facebook.com/thakkabbalrealestate",
+      "https://instagram.com/thakkabbalrealestate"
+    ]
+  }
+  </script>
+
   <title>Thakkabbal Real Estate</title>
+
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f8f9fa; }
     header { background: #2c3e50; color: white; padding: 1rem 2rem; text-align: center; }
@@ -19,9 +72,14 @@
     .property-card .info { padding: 1rem; }
     .price { color: #2ecc71; font-weight: bold; margin: 0.5rem 0; font-size: 1.1rem; }
     footer { text-align: center; padding: 1rem; background: #2c3e50; color: white; margin-top: 2rem; }
-    @media (max-width: 600px) { nav { flex-direction: column; } nav a { width: 100%; text-align: center; padding: 0.75rem; } section { padding: 1.5rem 1rem; } }
+    @media (max-width: 600px) {
+      nav { flex-direction: column; }
+      nav a { width: 100%; text-align: center; padding: 0.75rem; }
+      section { padding: 1.5rem 1rem; }
+    }
   </style>
 </head>
+
 <body>
   <header>
     <h1>🏠 Thakkabbal Real Estate</h1>
@@ -64,8 +122,8 @@
   <section id="contact">
     <h2>Contact Us</h2>
     <p>Email: contact@thakkabbalrealestate.com</p>
-    <p>Phone: +91-9876543210</p>
-    <p>Location: MANNARKKAD,PALAKKAD, KERALA, INDIA </p>
+    <p>Phone: +91-9847418042 ,8921397793</p>
+    <p>Location: manarkkad , palakkad, Kerala, India</p>
   </section>
 
   <footer>
@@ -77,7 +135,6 @@
     const SHEET_ID = "1Gvv94pycsAjLNmVhthW2iBAGlVNfCBYytL_O3tiblD8";
     const sheetUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
-    // Convert Google Drive link to direct image link
     function driveLinkToDirect(url) {
       const match = url.match(/\/d\/([a-zA-Z0-9_-]+)\//);
       if (match && match[1]) {
@@ -86,7 +143,6 @@
       return url;
     }
 
-    // Remove quotes and extra spaces
     function cleanText(text) {
       return text.replace(/^"|"$/g, '').trim();
     }
@@ -99,9 +155,9 @@
         const container = document.getElementById("property-list");
 
         rows.slice(1).forEach(row => {
-          if(row.length < 4) return;
+          if (row.length < 4) return;
           let [name, price, details, image] = row.map(cleanText);
-          if(!name) return;
+          if (!name) return;
 
           image = driveLinkToDirect(image);
 
@@ -117,7 +173,7 @@
           `;
           container.appendChild(card);
         });
-      } catch(err) {
+      } catch (err) {
         console.error("Error loading Google Sheet:", err);
       }
     }
