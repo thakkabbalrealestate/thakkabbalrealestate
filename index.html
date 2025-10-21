@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- ✅ Basic Meta Tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="title" content="Thakkabbal Real Estate | Low Budget Land & House in Kerala">
@@ -78,7 +77,7 @@
   <section id="contact">
     <h2>Contact Us</h2>
     <p>Email: contact@thakkabbalrealestate.com</p>
-    <p>Phone : +91-9847418042,
+    <p>Phone: +91-9847418042,
 +91-8921397793
 </p>
     <p>Location: Mannarkkad,Palakkad, Kerala, India</p>
@@ -88,7 +87,6 @@
     <p>© 2025 Thakkabbal Real Estate | All Rights Reserved</p>
   </footer>
 
-  <!-- 🔹 Google Sheets Integration -->
   <script>
     const SHEET_ID = "1Gvv94pycsAjLNmVhthW2iBAGlVNfCBYytL_O3tiblD8";
     const sheetUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
@@ -119,14 +117,10 @@
 
           image = driveLinkToDirect(image);
 
-          // 🧠 Decide the button text based on the link
-          let buttonText = "";
-          if (link) {
-            if (link.includes("youtube.com") || link.includes("youtu.be")) {
-              buttonText = "🎥 View Video";
-            } else {
-              buttonText = "🖼️ View Photo";
-            }
+          // 🧠 Decide if a video button should be shown
+          let videoButtonHtml = "";
+          if (link && (link.includes("youtube.com") || link.includes("youtu.be"))) {
+            videoButtonHtml = `<a href="${link}" target="_blank" class="link-btn">View Video</a>`;
           }
 
           const card = document.createElement("div");
@@ -137,7 +131,7 @@
               <h3>${name}</h3>
               <p class="price">${price}</p>
               <p>${details}</p>
-              ${link ? `<a href="${link}" target="_blank" class="link-btn">${buttonText}</a>` : ""}
+              ${videoButtonHtml}
             </div>
           `;
           container.appendChild(card);
