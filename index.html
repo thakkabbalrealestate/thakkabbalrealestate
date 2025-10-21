@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,55 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="title" content="Thakkabbal Real Estate | Low Budget Land & House in Kerala">
-  <meta name="description" content="Find low budget land, plots, and houses in Kerala with Thakkabbal Real Estate. Verified property listings, water access, road-side plots, and more — updated regularly from our YouTube channel.">
+  <meta name="description" content="Find low budget land, plots, and houses in Kerala with Thakkabbal Real Estate. Verified property listings updated regularly from our YouTube channel.">
   <meta name="keywords" content="Thakkabbal Real Estate, Kerala Real Estate, low budget land, house for sale Kerala, plot for sale, land for sale Thrissur, Mannarkkad real estate, cheap land Kerala, agricultural land, Thakkabbalrealestate YouTube">
   <meta name="author" content="Thakkabbal Real Estate">
-
-  <!-- ✅ Open Graph / Facebook Meta Tags -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Thakkabbal Real Estate | Kerala Low Budget Land & House Deals">
-  <meta property="og:description" content="Explore affordable land and house listings in Kerala. Trusted property updates from Thakkabbal Real Estate YouTube channel.">
-  <meta property="og:image" content="https://yourdomain.com/images/thakkabbal-banner.jpg">
-  <meta property="og:url" content="https://yourdomain.com/">
-  <meta property="og:site_name" content="Thakkabbal Real Estate">
-
-  <!-- ✅ Twitter Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Thakkabbal Real Estate | Kerala Property Deals">
-  <meta name="twitter:description" content="Low budget land and house listings in Kerala from Thakkabbal Real Estate.">
-  <meta name="twitter:image" content="https://yourdomain.com/images/thakkabbal-banner.jpg">
-
-  <!-- ✅ Favicon -->
-  <link rel="icon" type="image/png" href="https://yourdomain.com/favicon.png">
-
-  <!-- ✅ YouTube Profile Link -->
-  <link rel="me" href="https://youtube.com/@thakkabbalrealestate1339?si=QUIrMAzhMHxOsJHh">
-
-  <!-- ✅ Schema.org Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "RealEstateAgent",
-    "name": "Thakkabbal Real Estate",
-    "image": "https://yourdomain.com/images/thakkabbal-banner.jpg",
-    "url": "https://yourdomain.com/",
-    "logo": "https://yourdomain.com/favicon.png",
-    "description": "Low budget land, plots, and houses for sale across Kerala. Trusted and verified property listings updated from our Thakkabbal Real Estate YouTube channel.",
-    "telephone": "+91-9876543210",
-    "email": "contact@thakkabbalrealestate.com",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Kochi",
-      "addressLocality": "Kerala",
-      "addressCountry": "IN"
-    },
-    "sameAs": [
-      "https://www.youtube.com/@thakkabbalrealestate",
-      "https://facebook.com/thakkabbalrealestate",
-      "https://instagram.com/thakkabbalrealestate"
-    ]
-  }
-  </script>
 
   <title>Thakkabbal Real Estate</title>
 
@@ -74,23 +25,9 @@
     .property-card img { width: 100%; border-radius: 10px 10px 0 0; display: block; }
     .property-card .info { padding: 1rem; }
     .price { color: #2ecc71; font-weight: bold; margin: 0.5rem 0; font-size: 1.1rem; }
+    .link-btn { display: inline-block; background: #2ecc71; color: white; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: bold; }
+    .link-btn:hover { background: #27ae60; }
     footer { text-align: center; padding: 1rem; background: #2c3e50; color: white; margin-top: 2rem; }
-
-    .view-btn {
-      display: inline-block;
-      margin-top: 10px;
-      background: #34495e; /* dark blue-grey */
-      color: white;
-      padding: 8px 14px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
-    .view-btn:hover {
-      background: #2ecc71; /* green hover */
-    }
-
     @media (max-width: 600px) {
       nav { flex-direction: column; }
       nav a { width: 100%; text-align: center; padding: 0.75rem; }
@@ -141,9 +78,10 @@
   <section id="contact">
     <h2>Contact Us</h2>
     <p>Email: contact@thakkabbalrealestate.com</p>
-    <p>Phone: +91-9847418042,+91-8921397793
+    <p>Phone : +91-9847418042,
++91-8921397793
 </p>
-    <p>Location: Kochi, Kerala, India</p>
+    <p>Location: Mannarkkad,Palakkad, Kerala, India</p>
   </section>
 
   <footer>
@@ -175,11 +113,21 @@
         const container = document.getElementById("property-list");
 
         rows.slice(1).forEach(row => {
-          if (row.length < 5) return;
+          if (row.length < 5) return; // Expecting 5 columns
           let [name, price, details, image, link] = row.map(cleanText);
           if (!name) return;
 
           image = driveLinkToDirect(image);
+
+          // 🧠 Decide the button text based on the link
+          let buttonText = "";
+          if (link) {
+            if (link.includes("youtube.com") || link.includes("youtu.be")) {
+              buttonText = "🎥 View Video";
+            } else {
+              buttonText = "🖼️ View Photo";
+            }
+          }
 
           const card = document.createElement("div");
           card.className = "card property-card";
@@ -189,7 +137,7 @@
               <h3>${name}</h3>
               <p class="price">${price}</p>
               <p>${details}</p>
-              ${link ? `<a href="${link}" target="_blank" class="view-btn">View Details</a>` : ''}
+              ${link ? `<a href="${link}" target="_blank" class="link-btn">${buttonText}</a>` : ""}
             </div>
           `;
           container.appendChild(card);
@@ -203,5 +151,3 @@
   </script>
 </body>
 </html>
-
-
