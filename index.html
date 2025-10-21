@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,6 +73,22 @@
     .property-card .info { padding: 1rem; }
     .price { color: #2ecc71; font-weight: bold; margin: 0.5rem 0; font-size: 1.1rem; }
     footer { text-align: center; padding: 1rem; background: #2c3e50; color: white; margin-top: 2rem; }
+
+    .view-btn {
+      display: inline-block;
+      margin-top: 10px;
+      background: #34495e; /* dark blue-grey */
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    .view-btn:hover {
+      background: #2ecc71; /* green hover */
+    }
+
     @media (max-width: 600px) {
       nav { flex-direction: column; }
       nav a { width: 100%; text-align: center; padding: 0.75rem; }
@@ -122,8 +139,8 @@
   <section id="contact">
     <h2>Contact Us</h2>
     <p>Email: contact@thakkabbalrealestate.com</p>
-    <p>Phone: +91-9847418042 ,+91-8921397793</p>
-    <p>Location: Mannarkkad , Palakkad , Kerala, India</p>
+    <p>Phone: +91-9847418042,+91-8921397793</p>
+    <p>Location: Mannarkkad ,Palakkad , Kerala, India</p>
   </section>
 
   <footer>
@@ -155,8 +172,8 @@
         const container = document.getElementById("property-list");
 
         rows.slice(1).forEach(row => {
-          if (row.length < 4) return;
-          let [name, price, details, image] = row.map(cleanText);
+          if (row.length < 5) return;
+          let [name, price, details, image, link] = row.map(cleanText);
           if (!name) return;
 
           image = driveLinkToDirect(image);
@@ -169,6 +186,7 @@
               <h3>${name}</h3>
               <p class="price">${price}</p>
               <p>${details}</p>
+              ${link ? `<a href="${link}" target="_blank" class="view-btn">View Details</a>` : ''}
             </div>
           `;
           container.appendChild(card);
@@ -182,4 +200,5 @@
   </script>
 </body>
 </html>
+
 
