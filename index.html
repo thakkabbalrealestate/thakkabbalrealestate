@@ -117,10 +117,14 @@
 
           image = driveLinkToDirect(image);
 
-          // 🧠 Decide if a video button should be shown
-          let videoButtonHtml = "";
-          if (link && (link.includes("youtube.com") || link.includes("youtu.be"))) {
-            videoButtonHtml = `<a href="${link}" target="_blank" class="link-btn">View Video</a>`;
+          // Decide the button text based on the link
+          let buttonText = "";
+          if (link) {
+            if (link.includes("youtube.com") || link.includes("youtu.be")) {
+              buttonText = "View Video"; // Removed 🎥
+            } else {
+              buttonText = "View Photo"; // Removed 🖼️
+            }
           }
 
           const card = document.createElement("div");
@@ -131,7 +135,7 @@
               <h3>${name}</h3>
               <p class="price">${price}</p>
               <p>${details}</p>
-              ${videoButtonHtml}
+              ${link ? `<a href="${link}" target="_blank" class="link-btn">${buttonText}</a>` : ""}
             </div>
           `;
           container.appendChild(card);
